@@ -1,42 +1,55 @@
 (function () {
   'use strict';
 
-  document.querySelectorAll('.share-website-btn').forEach((button) => {
-    button.addEventListener('click', async () => {
-      const url = window.location.href.split('#')[0];
-      const status = button.parentElement.querySelector('.share-website-status');
+  const LABEL = 'Copy link';
+  const LABEL_DONE = 'Copied!';
 
-      if (typeof navigator.share === 'function') {
-        try {
-          await navigator.share({
-            title: document.title,
-            text: "What's Up on the Front — Что по фронту?",
-            url
-          });
-          status.textContent = 'Thanks for sharing!';
-          return;
-        } catch (error) {
-          if (error.name === 'AbortError') {
-            status.textContent = '';
-            return;
-          }
-          console.error('Native website sharing failed; trying to copy the link.', error);
-        }
-      }
+  // The link to the website itself (no hash or query string)
+  function siteUrl() {
+    return window.location.origin + window.location.pathname;
+  }
 
+  async function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      return;
+    }
+    // Fallback for browsers without the Clipboard API
+    const area = document.createElement('textarea');
+    area.value = text;
+    area.setAttribute('readonly', '');
+    area.style.position = 'fixed';
+    area.style.opacity = '0';
+    document.body.appendChild(area);
+    area.select();
+    const ok = document.execCommand('copy');
+    area.remove();
+    if (!ok) throw new Error('Copy failed');
+  }
+
+  document.querySelectorAll('.share-website-btn').forEach((btn) => {
+    btn.textContent = LABEL;
+    const status = btn.parentElement
+      ? btn.parentElement.querySelector('.share-website-status')
+      : null;
+    let timer = null;
+
+    btn.addEventListener('click', async () => {
+      let message = 'Link copied';
+      let label = LABEL_DONE;
       try {
-        if (!navigator.clipboard || typeof navigator.clipboard.writeText !== 'function') {
-          throw new Error('Clipboard access is unavailable.');
-        }
-        await navigator.clipboard.writeText(url);
-        status.textContent = 'Link copied!';
+        await copyText(siteUrl());
       } catch (error) {
-        console.error('Could not copy the website link.', error);
-        const copied = window.prompt('Copy this link to share the website:', url);
-        status.textContent = copied === null
-          ? 'Copy the website address from your browser to share it.'
-          : 'Link ready to share.';
+        message = 'Could not copy the link';
+        label = LABEL;
       }
+      btn.textContent = label;
+      if (status) status.textContent = message;
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        btn.textContent = LABEL;
+        if (status) status.textContent = '';
+      }, 2000);
     });
   });
 })();
