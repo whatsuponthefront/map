@@ -1,0 +1,34 @@
+#centerCrosshair {
+  position: fixed; z-index: 800;
+  width: 48px; height: 48px;
+  transform: translate(-50%, -50%);
+  pointer-events: none; user-select: none;
+}
+#centerCrosshair[hidden] { display: none; }
+
+/* Badge position: change top/right to move it to another corner */
+#centerCoords {
+  position: fixed; top: 10px; right: 52px; z-index: 900;
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 8px;
+  background: rgba(11, 15, 20, 0.88);
+  border: 1px solid #2a3340; border-radius: 10px;
+  color: #e8edf2;
+  backdrop-filter: blur(4px);
+}
+#centerCoords .xh-label {
+  color: #8da0af; font: 700 9px system-ui;
+  text-transform: uppercase; letter-spacing: 0.08em;
+}
+#centerCoords .xh-text {
+  font: 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-variant-numeric: tabular-nums;
+}
+#centerCoords button {
+  padding: 3px 8px; border-radius: 6px;
+  border: 1px solid rgba(255, 148, 0, 0.35);
+  background: rgba(255, 148, 0, 0.1);
+  color: #ffb45b; cursor: pointer; font: 700 10px system-ui;
+}
+#centerCoords button:hover { background: rgba(255, 148, 0, 0.2); }
+#centerCoords .xh-toggle[aria-pressed="false"] { opacity: 0.5; }

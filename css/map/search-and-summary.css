@@ -94,6 +94,7 @@
         font: inherit;
         font-size: 12px;
         cursor: pointer;
+        transition: left 0.22s ease, top 0.22s ease, background 0.15s ease;
       }
 
       #mapOnlyToggleBtn:hover {
@@ -115,4 +116,8 @@
 
       body.sidebar-collapsed:not(.map-only-mode) #mapOnlyToggleBtn {
         left: 12px;
+      }
+
+      body.map-only-mode > :not(#map):not(#mapOnlyToggleBtn):not(#centerCrosshair) {
+        display: none !important;
       }
