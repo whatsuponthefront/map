@@ -1,4 +1,12 @@
       // ---- Casualty data ----
+      // The chart shows only the newest N daily dots. Older dots stay
+      // stored in Firestore, they are just not displayed.
+      const CASUALTY_CHART_MAX_DAYS = 7;
+
+      function visibleCasualtyDaily(daily) {
+        return daily.slice(-CASUALTY_CHART_MAX_DAYS);
+      }
+
       // EXAMPLE DATA ONLY. totalSince2022 is meant to be a war-start-to-
       // date running total (24.02.2022 onward); daily is that side's
       // reported/estimated losses for each single day shown in the chart
@@ -139,16 +147,16 @@
         document.getElementById('ukraineTotalSince').innerHTML =
           'Total since 24.02.2022<strong>' + casualtyData.ukraine.totalSince2022.toLocaleString() + '</strong>';
 
-        const russiaChartTotal = casualtyData.russia.daily.reduce((sum, d) => sum + d.casualties, 0);
-        const ukraineChartTotal = casualtyData.ukraine.daily.reduce((sum, d) => sum + d.casualties, 0);
+        const russiaChartTotal = visibleCasualtyDaily(casualtyData.russia.daily).reduce((sum, d) => sum + d.casualties, 0);
+        const ukraineChartTotal = visibleCasualtyDaily(casualtyData.ukraine.daily).reduce((sum, d) => sum + d.casualties, 0);
 
         document.getElementById('russiaCasualtyTotal').innerHTML =
           'Shown in chart: <strong>' + russiaChartTotal.toLocaleString() + '</strong>';
         document.getElementById('ukraineCasualtyTotal').innerHTML =
           'Shown in chart: <strong>' + ukraineChartTotal.toLocaleString() + '</strong>';
 
-        document.getElementById('russiaCasualtyChart').innerHTML = buildCasualtyChartSVG(casualtyData.russia.daily, '#FF9400');
-        document.getElementById('ukraineCasualtyChart').innerHTML = buildCasualtyChartSVG(casualtyData.ukraine.daily, '#0000ff', '#5b9dff');
+        document.getElementById('russiaCasualtyChart').innerHTML = buildCasualtyChartSVG(visibleCasualtyDaily(casualtyData.russia.daily), '#FF9400');
+        document.getElementById('ukraineCasualtyChart').innerHTML = buildCasualtyChartSVG(visibleCasualtyDaily(casualtyData.ukraine.daily), '#0000ff', '#5b9dff');
 
         wireCasualtyChartDots(document.getElementById('russiaCasualtyChart'));
         wireCasualtyChartDots(document.getElementById('ukraineCasualtyChart'));

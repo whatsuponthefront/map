@@ -21,14 +21,22 @@
       function buildCasualtyAdminHTML(sideKey) {
         const side = casualtyData[sideKey];
 
-        const entriesHtml = side.daily.map((entry, index) => (
-          '<div class="casualty-admin-entry" data-index="' + index + '">' +
-          '<span class="entry-date">' + escapeHtml(formatShortDate(entry.date)) + '</span>' +
-          '<input type="number" class="entry-casualties-input" min="0" step="1" value="' + entry.casualties + '" aria-label="Casualties on ' + escapeHtml(entry.date) + '" />' +
-          '<button type="button" class="casualty-admin-btn entry-save-btn">Save</button>' +
-          '<button type="button" class="casualty-admin-btn danger entry-delete-btn">Delete</button>' +
-          '</div>'
-        )).join('');
+        // Only the dots currently shown in the chart are listed here
+        // (the newest CASUALTY_CHART_MAX_DAYS), but each row keeps its
+        // real index in the full list so Save and Delete hit the right
+        // entry.
+        const firstShown = Math.max(0, side.daily.length - CASUALTY_CHART_MAX_DAYS);
+        const entriesHtml = side.daily.slice(firstShown).map((entry, offset) => {
+          const index = firstShown + offset;
+          return (
+            '<div class="casualty-admin-entry" data-index="' + index + '">' +
+            '<span class="entry-date">' + escapeHtml(formatShortDate(entry.date)) + '</span>' +
+            '<input type="number" class="entry-casualties-input" min="0" step="1" value="' + entry.casualties + '" aria-label="Casualties on ' + escapeHtml(entry.date) + '" />' +
+            '<button type="button" class="casualty-admin-btn entry-save-btn">Save</button>' +
+            '<button type="button" class="casualty-admin-btn danger entry-delete-btn">Delete</button>' +
+            '</div>'
+          );
+        }).join('');
 
         return (
           '<div class="casualty-admin-title">Admin: edit ' + (sideKey === 'russia' ? 'Russian' : 'Ukrainian') + ' data</div>' +
