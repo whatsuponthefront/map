@@ -50,7 +50,10 @@
 .news-images img { width: 100%; max-height: 260px; object-fit: cover; border-radius: 6px; display: block; cursor: zoom-in; }
 .news-images img:only-child { grid-column: 1 / -1; max-height: 340px; }
 
-.news-source { display: inline-block; margin-top: 8px; font-size: 12px; color: #FF9400; text-decoration: underline; overflow-wrap: anywhere; }
+.news-source-footer { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin-top: 12px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,.1); font-size: 12px; }
+.news-source-label { opacity: .55; }
+.news-source-link { color: #FF9400; text-decoration: underline; overflow-wrap: anywhere; }
+.news-source-text { overflow-wrap: anywhere; }
 .news-delete-btn { padding: 2px 8px; border: 1px solid rgba(255,255,255,.2); border-radius: 4px; background: transparent; color: inherit; font-size: 11px; cursor: pointer; }
 .news-delete-btn:hover { border-color: #FF6B60; color: #FF6B60; }
 .news-empty { padding: 18px 0; font-size: 13px; opacity: .6; }

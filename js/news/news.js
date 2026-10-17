@@ -212,21 +212,32 @@
         item.appendChild(gallery);
       }
 
-      const href = d.source ? safeUrl(d.source) : null;
-      if (href) {
-        const a = document.createElement('a');
-        a.className = 'news-source';
-        a.href = href;
-        a.target = '_blank';
-        a.rel = 'noopener noreferrer';
-        a.textContent = 'Source: ' + new URL(href).hostname.replace(/^www\./, '');
-        item.appendChild(a);
-      } else if (d.source) {
-        const s = document.createElement('div');
-        s.className = 'news-source';
-        s.style.textDecoration = 'none';
-        s.textContent = 'Source: ' + d.source;
-        item.appendChild(s);
+      if (d.source) {
+        const footer = document.createElement('div');
+        footer.className = 'news-source-footer';
+        const label = document.createElement('span');
+        label.className = 'news-source-label';
+        label.textContent = 'Source';
+        footer.appendChild(label);
+
+        // Accepts "https://link" or "Name https://link"
+        const m = String(d.source).trim().match(/^(.*?)\s*(https?:\/\/\S+)$/);
+        const href = m ? safeUrl(m[2]) : null;
+        if (href) {
+          const a = document.createElement('a');
+          a.className = 'news-source-link';
+          a.href = href;
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          a.textContent = m[1].trim() || new URL(href).hostname.replace(/^www\./, '');
+          footer.appendChild(a);
+        } else {
+          const t = document.createElement('span');
+          t.className = 'news-source-text';
+          t.textContent = d.source;
+          footer.appendChild(t);
+        }
+        item.appendChild(footer);
       }
 
       listEl.appendChild(item);
