@@ -1,0 +1,59 @@
+/* News tab */
+.news-panel { display: flex; flex-direction: column; gap: 14px; padding: 4px 0 24px; }
+.news-intro { margin: 0; font-size: 13px; line-height: 1.5; opacity: .75; }
+
+.news-composer { display: flex; flex-direction: column; gap: 8px; padding: 12px; border: 1px solid rgba(255,255,255,.12); border-radius: 8px; background: rgba(255,255,255,.03); }
+.news-composer form { display: flex; flex-direction: column; gap: 8px; }
+.news-composer-title { font-weight: 600; font-size: 13px; }
+.news-composer input[type="text"],
+.news-composer textarea { width: 100%; box-sizing: border-box; padding: 8px 10px; border: 1px solid rgba(255,255,255,.15); border-radius: 6px; background: rgba(0,0,0,.35); color: inherit; font: inherit; font-size: 13px; resize: vertical; }
+.news-composer input:focus-visible,
+.news-composer textarea:focus-visible { outline: 2px solid #FF9400; outline-offset: 1px; }
+.news-composer-row { display: flex; align-items: center; gap: 10px; }
+.news-status { flex: 1; font-size: 12px; opacity: .8; min-height: 1em; }
+.news-status.is-error { color: #FF6B60; opacity: 1; }
+.news-publish-btn { padding: 8px 14px; border: 0; border-radius: 6px; background: #FF9400; color: #111; font-weight: 600; cursor: pointer; }
+.news-publish-btn:disabled { opacity: .5; cursor: default; }
+
+.news-toolbar { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.news-toolbar button,
+.news-add-photo { padding: 4px 10px; border: 1px solid rgba(255,255,255,.2); border-radius: 5px; background: transparent; color: inherit; font-size: 13px; cursor: pointer; }
+.news-toolbar button:hover,
+.news-add-photo:hover { border-color: #FF9400; }
+.news-toolbar .news-fmt-b { font-weight: 700; }
+.news-toolbar .news-fmt-i { font-style: italic; }
+.news-add-photo { margin-left: auto; }
+.news-format-hint { margin: 0; font-size: 11.5px; opacity: .6; line-height: 1.45; }
+
+.news-image-preview { display: flex; gap: 8px; flex-wrap: wrap; }
+.news-image-preview:empty { display: none; }
+.news-thumb { position: relative; width: 72px; height: 72px; }
+.news-thumb img { width: 100%; height: 100%; object-fit: cover; border-radius: 6px; display: block; }
+.news-thumb button { position: absolute; top: -6px; right: -6px; width: 20px; height: 20px; padding: 0; border: 0; border-radius: 50%; background: #FF3B30; color: #fff; font-size: 14px; line-height: 20px; cursor: pointer; }
+
+.news-list { display: flex; flex-direction: column; }
+.news-item { padding: 14px 0; border-top: 1px solid rgba(255,255,255,.1); }
+.news-item:first-child { border-top: 0; }
+.news-meta { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 12px; opacity: .65; }
+.news-title { margin: 6px 0 4px; font-size: 15px; line-height: 1.35; }
+.news-body { margin: 6px 0 0; font-size: 13.5px; line-height: 1.55; overflow-wrap: anywhere; }
+.news-body p { margin: 0 0 .7em; }
+.news-body p:last-child { margin-bottom: 0; }
+.news-body a { color: #FF9400; }
+.news-h { font-weight: 700; line-height: 1.3; margin: .9em 0 .4em; }
+.news-h:first-child { margin-top: 0; }
+.news-h1 { font-size: 20px; }
+.news-h2 { font-size: 17px; }
+.news-h3 { font-size: 15px; }
+
+.news-images { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 6px; margin-top: 10px; }
+.news-images img { width: 100%; max-height: 260px; object-fit: cover; border-radius: 6px; display: block; cursor: zoom-in; }
+.news-images img:only-child { grid-column: 1 / -1; max-height: 340px; }
+
+.news-source { display: inline-block; margin-top: 8px; font-size: 12px; color: #FF9400; text-decoration: underline; overflow-wrap: anywhere; }
+.news-delete-btn { padding: 2px 8px; border: 1px solid rgba(255,255,255,.2); border-radius: 4px; background: transparent; color: inherit; font-size: 11px; cursor: pointer; }
+.news-delete-btn:hover { border-color: #FF6B60; color: #FF6B60; }
+.news-empty { padding: 18px 0; font-size: 13px; opacity: .6; }
+
+.news-lightbox { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(0,0,0,.88); cursor: zoom-out; }
+.news-lightbox img { max-width: 100%; max-height: 100%; border-radius: 6px; }

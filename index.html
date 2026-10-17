@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>What's Up on the Front — Что по фронту?</title>
     <meta property="og:site_name" content="What's Up on the Front" />
-    <meta property="og:title" content="What's Up on the Front — Что по фронту?" />
+    <meta property="og:title" content="What's Up on the Front?" />
     <meta name="theme-color" content="#0b0f14" />
     <!-- Placeholder avatar (inline SVG). To use your own image, replace this href
          with e.g. "avatar.png" (square, 256x256+) uploaded next to index.html. -->
@@ -40,6 +40,7 @@
     <link rel="stylesheet" href="contact.css" />
     <link rel="stylesheet" href="css/video/mini-player.css" />
     <link rel="stylesheet" href="css/map/center-crosshair.css" />
+    <link rel="stylesheet" href="css/news/news.css" />
   </head>
   <body>
     <div id="map"></div>
@@ -130,11 +131,41 @@
         <button id="legendTabBtn" class="sidebar-tab" type="button" role="tab" aria-selected="true" aria-controls="legendView">Legend</button>
         <button id="casualtiesTabBtn" class="sidebar-tab" type="button" role="tab" aria-selected="false" aria-controls="casualtiesView">Casualties</button>
         <button id="advancesTabBtn" class="sidebar-tab" type="button" role="tab" aria-selected="false" aria-controls="advancesView">Advances</button>
+        <button id="newsTabBtn" class="sidebar-tab" type="button" role="tab" aria-selected="false" aria-controls="newsView">News</button>
         <button id="frontlineTabBtn" class="sidebar-tab admin-only" type="button" role="tab" aria-selected="false" aria-controls="frontlineView">Frontline</button>
         <button id="geolocationsTabBtn" class="sidebar-tab" type="button" role="tab" aria-selected="false" aria-controls="geolocationsView">Geolocations</button>
         <button id="contactTabBtn" class="sidebar-tab" type="button" role="tab" aria-selected="false" aria-controls="contactView">Contact<span id="contactTabBadge" class="cc-tab-badge" hidden></span></button>
       </div>
       <div id="sidebarViews">
+        <div id="newsView" class="sidebar-view" role="tabpanel" hidden>
+          <div class="news-panel">
+            <p class="news-intro">Latest updates from the front.</p>
+            <section class="news-composer admin-only" aria-label="Post news">
+              <div class="news-composer-title">Admin · post news</div>
+              <form id="newsForm">
+                <input id="newsTitleInput" type="text" maxlength="150" placeholder="Headline (optional)" />
+                <div id="newsToolbar" class="news-toolbar">
+                  <button type="button" class="news-fmt-b" data-fmt="bold" title="Bold" aria-label="Bold">B</button>
+                  <button type="button" class="news-fmt-i" data-fmt="italic" title="Italic" aria-label="Italic">I</button>
+                  <button type="button" data-fmt="heading" title="Heading" aria-label="Heading">H</button>
+                  <button type="button" data-fmt="link" title="Link" aria-label="Link">Link</button>
+                  <label class="news-add-photo">Add photos
+                    <input id="newsImageInput" type="file" accept="image/*" multiple hidden />
+                  </label>
+                </div>
+                <textarea id="newsBodyInput" rows="6" maxlength="3000" placeholder="What happened?" required></textarea>
+                <p class="news-format-hint">**bold**, *italic*, # biggest heading, ## big, ### medium, [text](https://link)</p>
+                <div id="newsImagePreview" class="news-image-preview"></div>
+                <input id="newsSourceInput" type="text" maxlength="300" placeholder="Source link (optional)" />
+                <div class="news-composer-row">
+                  <div id="newsStatus" class="news-status" role="status" aria-live="polite"></div>
+                  <button id="newsPublishBtn" class="news-publish-btn" type="submit">Post</button>
+                </div>
+              </form>
+            </section>
+            <div id="newsList" class="news-list" aria-live="polite"></div>
+          </div>
+        </div>
         <div id="legendView" class="sidebar-view is-active" role="tabpanel">
           <section id="adminPanel" class="admin-only" aria-label="Admin panel">
             <div class="admin-panel-heading">Admin panel</div>
@@ -444,6 +475,7 @@
     <script src="js/map/map-interactions.js"></script>
     <script src="js/video/mini-player.js"></script>
     <script src="js/geolocations/publisher.js"></script>
+    <script src="js/news/news.js"></script>
     <script src="js/maintenance/maintenance-mode.js"></script>
     <script src="js/ruler/ruler.js"></script>
     <script src="js/utils/share-website.js"></script>
