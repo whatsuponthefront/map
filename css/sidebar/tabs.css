@@ -1,29 +1,147 @@
-      #sidebarTabs {
+/* Tab icons: a column of equal square buttons just left of the
+         sidebar panel (column 1 of the #sidebar grid).
+         Change --tab-size to resize every icon button at once. */
+      #sidebar {
+        --tab-size: 40px;
+        --icon-size: calc(var(--tab-size) * 0.5);
+        --rail-width: calc(var(--tab-size) + 18px);
+      }
+
+      #sidebar > #sidebarTabs {
+        grid-column: 1;
+        grid-row: 1 / -1;
         display: flex;
-        gap: 6px;
-        padding: 12px 18px 0;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        width: var(--rail-width);
+        padding: 22px 8px 12px;
+        box-sizing: border-box;
+        overflow: visible;
+        /* A darker shade of the panel colour, drawn over the panel background */
+        background: rgba(0, 0, 0, 0.35);
+        border-right: 1px solid rgba(255, 255, 255, 0.08);
       }
 
       .sidebar-tab {
-        flex: 1;
-        height: 36px;
+        position: relative;
+        flex: 0 0 auto;
+        width: var(--tab-size);
+        height: var(--tab-size);
+        min-width: var(--tab-size);
+        min-height: var(--tab-size);
+        aspect-ratio: 1 / 1;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
         border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 9px;
-        background: rgba(255, 255, 255, 0.03);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.04);
         color: #98a9b9;
-        font: inherit;
-        font-size: 13px;
-        font-weight: 600;
+        text-align: center;
         cursor: pointer;
       }
 
+      /* Icon (added by js/sidebar/tab-icons.js) */
+      .sidebar-tab svg {
+        display: block;
+        width: var(--icon-size);
+        height: var(--icon-size);
+        margin: calc((var(--tab-size) - 2px - var(--icon-size)) / 2) auto;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        pointer-events: none;
+      }
+
+      /* Tab name stays for screen readers, hidden visually */
+      .sidebar-tab .tab-label {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+      }
+
       .sidebar-tab:hover {
-        background: rgba(255, 255, 255, 0.07);
+        background: rgba(255, 255, 255, 0.09);
         color: #edf5ff;
       }
 
+      .sidebar-tab:focus-visible {
+        outline: 2px solid #ff9400;
+        outline-offset: 2px;
+      }
+
       .sidebar-tab[aria-selected="true"] {
-        background: rgba(255, 148, 0, 0.14);
-        border-color: rgba(255, 148, 0, 0.4);
+        background: rgba(255, 148, 0, 0.16);
+        border-color: rgba(255, 148, 0, 0.5);
         color: #ff9400;
+      }
+
+      /* Contact unread badge sits on the icon's corner */
+      #sidebarTabs .cc-tab-badge {
+        position: absolute;
+        top: -4px;
+        right: -4px;
+        margin: 0;
+      }
+
+      /* Name tooltip: appears to the right of the icon on hover / focus */
+      .sidebar-tab[data-tip]::after {
+        content: attr(data-tip);
+        position: absolute;
+        left: calc(100% + 12px);
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 700;
+        padding: 5px 10px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 7px;
+        background: rgba(15, 21, 28, 0.98);
+        color: #edf5ff;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 1.2;
+        white-space: nowrap;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.12s ease;
+      }
+
+      .sidebar-tab[data-tip]:hover::after,
+      .sidebar-tab[data-tip]:focus-visible::after {
+        opacity: 1;
+      }
+
+      /* Phones: slightly smaller icon buttons (rail width follows) */
+      @media (max-width: 640px) {
+        #sidebar {
+          --tab-size: 36px;
+        }
+
+        #sidebar > #sidebarTabs {
+          padding: 22px 6px 12px;
+        }
+      }
+
+      /* Force true squares: beats any other rule that stretches the buttons
+         (e.g. an old flex: 1 or a fixed height somewhere else). */
+      #sidebar > #sidebarTabs {
+        justify-content: flex-start;
+        align-content: flex-start;
+      }
+
+      #sidebar > #sidebarTabs > .sidebar-tab {
+        flex: 0 0 var(--tab-size) !important;
+        width: var(--tab-size) !important;
+        height: var(--tab-size) !important;
+        min-width: var(--tab-size) !important;
+        min-height: var(--tab-size) !important;
+        max-width: var(--tab-size) !important;
+        max-height: var(--tab-size) !important;
+        align-self: center;
       }

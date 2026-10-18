@@ -1,0 +1,76 @@
+/* Layer folders (Ukraine / Russia / Miscellaneous) */
+      .layer-folder {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .layer-folder-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        padding: 8px 6px;
+        border: 0;
+        border-radius: 8px;
+        background: transparent;
+        color: #edf5ff;
+        font: inherit;
+        font-size: 14px;
+        font-weight: 700;
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .layer-folder-header:hover {
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      .layer-folder-header:focus-visible {
+        outline: 2px solid #ff9400;
+        outline-offset: 1px;
+      }
+
+      .layer-folder-arrow {
+        flex: 0 0 auto;
+        width: 7px;
+        height: 7px;
+        margin: 0 3px 2px 2px;
+        border-right: 2px solid #98a9b9;
+        border-bottom: 2px solid #98a9b9;
+        transform: rotate(45deg);
+        transition: transform 0.15s ease;
+      }
+
+      .layer-folder.is-collapsed .layer-folder-arrow {
+        transform: rotate(-45deg);
+        margin-bottom: 0;
+      }
+
+      .layer-folder-name {
+        flex: 1;
+      }
+
+      .layer-folder-count {
+        min-width: 22px;
+        padding: 2px 7px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.07);
+        color: #98a9b9;
+        font-size: 11px;
+        font-weight: 600;
+        text-align: center;
+      }
+
+      .layer-folder-body {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-left: 8px;
+        padding-left: 10px;
+        border-left: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .layer-folder.is-collapsed .layer-folder-body {
+        display: none;
+      }
